@@ -35,9 +35,9 @@ public class TargetLocator : MonoBehaviour
     void AimWeapon()
     {
         float targetDistance = Vector3.Distance(transform.position, target.position);
+        weapon.LookAt(target);
         if(targetDistance < towerMaxRange) {
-            // Aim
-            weapon.LookAt(target);
+            
             // Fire
             Attack(true);
         }
@@ -49,11 +49,6 @@ public class TargetLocator : MonoBehaviour
     void Attack(bool isActive)
     {
         var em = boltParticles.emission;
-        if(isActive) {
-            em.enabled = true;
-        }
-        else {
-            em.enabled = false;
-        }
+        em.enabled = isActive;
     }
 }

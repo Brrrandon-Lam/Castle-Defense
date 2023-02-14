@@ -43,7 +43,7 @@ public class ObjectPool : MonoBehaviour
     // Coroutine
     IEnumerator SpawnEnemies()
     {
-        for(int i = 0; i < objectPoolSize; i++) {
+        while(true) {
             EnableObjectInPool();
             yield return new WaitForSeconds(spawnTimer);
         }
