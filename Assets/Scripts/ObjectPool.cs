@@ -5,14 +5,12 @@ using UnityEngine;
 public class ObjectPool : MonoBehaviour
 {
     [SerializeField] GameObject enemy;
-    [SerializeField] int objectPoolSize = 5;
-    [SerializeField] float spawnTimer = 1f;
+    [SerializeField] [Range(0, 50)] int objectPoolSize = 5;
+    [SerializeField] [Range(0.1f, 30f)] float spawnTimer = 1f;
     GameObject[] objectPool;
 
     void Awake() {
-        
         PopulatePool();
-        
     }
 
     // Start is called before the first frame update
@@ -21,6 +19,7 @@ public class ObjectPool : MonoBehaviour
         StartCoroutine(SpawnEnemies());
     }
 
+    // Throw shit into the object pool and deactivate
     void PopulatePool()
     {
         objectPool = new GameObject[objectPoolSize];
@@ -30,6 +29,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    // Activate stuff in the pool
     void EnableObjectInPool()
     {
         for(int i = 0; i < objectPoolSize; i++) {
@@ -40,10 +40,10 @@ public class ObjectPool : MonoBehaviour
         }
     }
 
+    // Coroutine
     IEnumerator SpawnEnemies()
     {
         for(int i = 0; i < objectPoolSize; i++) {
-            // Instantiate object with ObjectPool as the parent by using transform
             EnableObjectInPool();
             yield return new WaitForSeconds(spawnTimer);
         }

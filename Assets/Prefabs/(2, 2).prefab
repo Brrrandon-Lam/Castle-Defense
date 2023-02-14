@@ -185,6 +185,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: facffca9d1c6dd74fa06ba01a23356eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultColor: {r: 0, g: 0, b: 0, a: 1}
+  builtColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
 --- !u!1 &8557185140922116616
 GameObject:
   m_ObjectHideFlags: 0
@@ -315,8 +317,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3790b66c7fd67e4baf5ce713f7e6f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ballista: {fileID: -9120586984076042736, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
   isBuildable: 1
-  ballista: {fileID: 3219458064393657486, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
 --- !u!65 &6991247612465521440
 BoxCollider:
   m_ObjectHideFlags: 0

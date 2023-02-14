@@ -5,6 +5,8 @@ using TMPro;
 
 // This script will now execute in both edit and play mode.
 [ExecuteAlways]
+[RequireComponent(typeof(TextMeshPro))]
+
 public class CoordinateLabels : MonoBehaviour
 {
     TextMeshPro label;
@@ -33,11 +35,11 @@ public class CoordinateLabels : MonoBehaviour
             DisplayCoordinates();
             UpdateObjectName();
         }
-        ColorCoordinates();
+        SetLabelColor();
         ToggleLabels();
     }
 
-    void ColorCoordinates()
+    void SetLabelColor()
     {
         if(waypoint.IsBuildable) {
             label.color = defaultColor;
