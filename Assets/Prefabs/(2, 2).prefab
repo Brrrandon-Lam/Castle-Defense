@@ -278,8 +278,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4462043884098372671}
   - component: {fileID: 2312872649394299360}
+  - component: {fileID: 6991247612465521440}
   m_Layer: 0
-  m_Name: Tile
+  m_Name: (2, 2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -314,3 +315,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e3790b66c7fd67e4baf5ce713f7e6f69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isBuildable: 1
+  ballista: {fileID: 3219458064393657486, guid: 8a965e088bae16643aab3d07ccfd5e2e, type: 3}
+--- !u!65 &6991247612465521440
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9047047163540766831}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 10, y: 1, z: 10}
+  m_Center: {x: 0, y: -0.5, z: 0}

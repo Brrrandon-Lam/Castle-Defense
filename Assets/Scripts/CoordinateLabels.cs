@@ -9,17 +9,18 @@ public class CoordinateLabels : MonoBehaviour
 {
     TextMeshPro label;
     Vector2Int coordinates = new Vector2Int();
+    [SerializeField] Color defaultColor = Color.black;
+    [SerializeField] Color builtColor = Color.gray;
+    Waypoint waypoint;
 
     void Awake() {
        label = GetComponent<TextMeshPro>();
+       label.enabled = false;
+       // Set waypoint component via parent
+       waypoint = GetComponentInParent<Waypoint>();
        // Calls display coordinates once on awake in the game.
        DisplayCoordinates();
-    }
-    // Initialize in 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+       
     }
 
     // Update is called once per frame
@@ -31,6 +32,18 @@ public class CoordinateLabels : MonoBehaviour
             // Calculate coordinates and update the object's name.
             DisplayCoordinates();
             UpdateObjectName();
+        }
+        ColorCoordinates();
+        ToggleLabels();
+    }
+
+    void ColorCoordinates()
+    {
+        if(waypoint.IsBuildable) {
+            label.color = defaultColor;
+        }
+        else {
+            label.color = builtColor;
         }
     }
 
@@ -45,5 +58,12 @@ public class CoordinateLabels : MonoBehaviour
     {
         // Convert our Vec2 int -> string
         transform.parent.name = coordinates.ToString();
+    }
+
+    void ToggleLabels()
+    {
+        if(Input.GetKeyDown(KeyCode.C)) {
+            label.enabled = !label.IsActive();
+        }
     }
 }
