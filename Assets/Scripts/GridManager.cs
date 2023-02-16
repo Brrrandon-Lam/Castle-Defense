@@ -5,6 +5,8 @@ using UnityEngine;
 public class GridManager : MonoBehaviour
 {
     [SerializeField] Vector2Int gridSize;
+    public Vector2Int GridSize { get { return gridSize; } }
+    
     [Tooltip("World grid size should match the Unity Editor Snap Settings.")]
     [SerializeField] int unityGridSize = 10;
     public int UnityGridSize { get { return unityGridSize; } }
