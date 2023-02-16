@@ -35,15 +35,13 @@ public class TargetLocator : MonoBehaviour
     void AimWeapon()
     {
         float targetDistance = Vector3.Distance(transform.position, target.position);
-        if(target != null) {
-            weapon.LookAt(target);
-            if(targetDistance < towerMaxRange) {   
-                // Fire
-                Attack(true);
-            }
-            else {
-                Attack(false);
-            }
+        weapon.LookAt(target);
+        if(targetDistance < towerMaxRange) {   
+            // Fire
+            Attack(true);
+        }
+        else {
+            Attack(false);
         }
     }
     

@@ -33746,7 +33746,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6336298388477663654, guid: 5dc2d046cabb78046aec34dae0d93e15, type: 3}
       propertyPath: objectPoolSize
-      value: 21
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 6336298388477663655, guid: 5dc2d046cabb78046aec34dae0d93e15, type: 3}
       propertyPath: m_Name
@@ -33767,7 +33767,7 @@ PrefabInstance:
       objectReference: {fileID: 320985329}
     - target: {fileID: 7990436106990160112, guid: 9f844f18899867547ab22bad89d9ec88, type: 3}
       propertyPath: startingBalance
-      value: 300
+      value: 350
       objectReference: {fileID: 0}
     - target: {fileID: 7990436106990160113, guid: 9f844f18899867547ab22bad89d9ec88, type: 3}
       propertyPath: m_RootOrder
