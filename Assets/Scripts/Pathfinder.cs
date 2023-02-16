@@ -7,6 +7,8 @@ public class Pathfinder : MonoBehaviour
     // Required nodes for our search
     [SerializeField] Vector2Int startCoordinates;
     [SerializeField] Vector2Int destinationCoordinates;
+    public Vector2Int StartCoordinates { get { return startCoordinates; } }
+    public Vector2Int DestinationCoordinates { get { return destinationCoordinates; } }
     Node startNode;
     Node destinationNode;
     Node currentSearchNode;
@@ -30,17 +32,28 @@ public class Pathfinder : MonoBehaviour
         gridManager = FindObjectOfType<GridManager>();
         if(gridManager) {
             grid = gridManager.Grid;
+            // Initialize our start and end coordinates
+            startNode = grid[startCoordinates];
+            destinationNode = grid[destinationCoordinates];
         }
     }
 
     // Call on start
     void Start() {
-        // Initialize our start and end coordinates
-        startNode = gridManager.Grid[startCoordinates];
-        destinationNode = gridManager.Grid[destinationCoordinates];
+        
+        GetNewPath();
+    }
 
-        AStar();
-        BuildPath();
+    public List<Node> GetNewPath()
+    {
+        return GetNewPath(startCoordinates);
+    }
+    // Overload function
+    public List<Node> GetNewPath(Vector2Int coordinates)
+    {
+        gridManager.ResetNodes();
+        AStar(coordinates);
+        return BuildPath();
     }
 
     /****** A-STAR IMPLEMENTATION ******/
@@ -58,18 +71,25 @@ public class Pathfinder : MonoBehaviour
         }
     }
 
-     void AStar()
+     void AStar(Vector2Int coordinates)
     {
+        // Clear pre-existing data and ensure our start and end nodes are walkable
+        startNode.isTraversable = true;
+        destinationNode.isTraversable = true;
+
+        frontier_astar.Clear();
+        explored.Clear();
+
         bool isRunning = true;
         // Add the start node to the frontier and explored list.
-        frontier_astar.Add(startNode);
-        explored.Add(startNode.coordinates, startNode);
+        frontier_astar.Add(grid[coordinates]);
+        explored.Add(coordinates, grid[coordinates]);
         // Call our initializeCosts() function
         InitializeCosts();
         // Initialize the fCost, gCost and hCost of the starting node
-        startNode.gCost = 0;
-        startNode.hCost = CalculateDistance(startNode, destinationNode);
-        startNode.CalculateFCost();
+        grid[coordinates].gCost = 0;
+        grid[coordinates].hCost = CalculateDistance(startNode, destinationNode);
+        grid[coordinates].CalculateFCost();
         // While the frontier is not empty
         while(frontier_astar.Count > 0 && isRunning) {
             // Find the node with the lowest f-cost in the frontier, called Q
@@ -158,11 +178,43 @@ public class Pathfinder : MonoBehaviour
         while(currentSearchNode.connectedTo != null) {
             currentSearchNode = currentSearchNode.connectedTo;
             path.Add(currentSearchNode);
-            Debug.Log("Path node: " + currentSearchNode.coordinates);
             currentSearchNode.isPath = true;
         }
         // Reverse list and return the path
         path.Reverse();
         return path;
+    }
+    
+    
+    // Determines whether a set of coordinates will block the path.
+    public bool WillBlockPath(Vector2Int coordinates)
+    {
+        // If the coordinates exist in our grid
+        if(grid.ContainsKey(coordinates)) {
+            // Store the previous state of the node (can we walk through it)?
+            bool previousState = grid[coordinates].isTraversable;
+            // Set isTraversable to false
+            grid[coordinates].isTraversable = false;
+            // Calculate a new path with this in mind
+            List<Node> newPath = GetNewPath();
+            // Restore the previous state
+            grid[coordinates].isTraversable = previousState;
+
+            // Blocked because it couldn't get further than this node.
+            if(newPath.Count <= 1) {
+                GetNewPath();
+                return true;
+            }
+        }
+        // Not blocked, can get further than this node.
+        return false;
+    }
+
+    // Broadcast a message to find a new path
+    public void NotifyReceivers()
+    {
+        // Shout into the void, even if no one is listening :)
+        // The second argument tells objects to recalculate from their current position on broadcast rather than from the start.
+        BroadcastMessage("RecalculatePath", false,  SendMessageOptions.DontRequireReceiver);
     }
 }

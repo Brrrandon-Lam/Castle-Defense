@@ -9,11 +9,13 @@ public class Tile : MonoBehaviour
     public bool IsBuildable { get { return isBuildable; } } // Property for isBuildable boolean
     
     GridManager gridManager;
+    Pathfinder pathfinder;
     Vector2Int coordinates = new Vector2Int();
 
     void Awake()
     {
         gridManager = FindObjectOfType<GridManager>();
+        pathfinder = FindObjectOfType<Pathfinder>();
     }
 
     void Start()
@@ -28,10 +30,14 @@ public class Tile : MonoBehaviour
     }
 
     void OnMouseDown() {
-        if(isBuildable) {
-            // Instantiate a tower
-            bool isBuilt = ballista.CreateTower(ballista, transform.position);
-            isBuildable = !isBuilt;
+        // If the node at the coordinates is traversable and will not block the path
+        if(gridManager.GetNode(coordinates).isTraversable && !pathfinder.WillBlockPath(coordinates)) {
+            // Instantiate a tower and return whether creation was successful or not
+            bool isSuccessful = ballista.CreateTower(ballista, transform.position);
+            if(isSuccessful) { 
+                gridManager.BlockNode(coordinates);
+                pathfinder.NotifyReceivers();
+            }
         }
     }
 }

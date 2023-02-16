@@ -35,6 +35,17 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    // Reset all of our nodes
+    public void ResetNodes()
+    {
+        foreach(KeyValuePair<Vector2Int, Node> entry in grid)
+        {
+            entry.Value.connectedTo = null;
+            entry.Value.isExplored = false;
+            entry.Value.isPath = false;
+        }
+    }
+
     // Convert between grid and tile coordinates, similar to DisplayCoordinates.
     // Taking a transform position and turning it into coordinates.
 
@@ -48,7 +59,7 @@ public class GridManager : MonoBehaviour
     }
 
     // Convert coordinates to world position
-    public Vector3 GetCoordinatesFromPosition(Vector2Int coordinates) {
+    public Vector3 GetPositionFromCoordinates(Vector2Int coordinates) {
         Vector3 position = new Vector3();
         position.x = coordinates.x * unityGridSize;
         position.z = coordinates.y * unityGridSize;
