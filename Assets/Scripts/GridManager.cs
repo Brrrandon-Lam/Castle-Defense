@@ -12,7 +12,7 @@ public class GridManager : MonoBehaviour
     public int UnityGridSize { get { return unityGridSize; } }
     Dictionary<Vector2Int, Node> grid = new Dictionary<Vector2Int, Node>();
     public Dictionary<Vector2Int, Node> Grid { get { return grid; } }
-    //
+    
     void Awake()
     {
         CreateGrid();
@@ -26,7 +26,7 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
-    // If a tile has an isBuildable flag, set isTraversable on our grid to false. 
+    // If a tile has an exists in the grid, block it from being traversable
     public void BlockNode(Vector2Int coordinates)
     {
         if(grid.ContainsKey(coordinates))
